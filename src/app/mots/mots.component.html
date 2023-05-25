@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Mots</title>
+</head>
+<body>
+    <main>
+        <div *ngFor="let translation of translations" class="card" (click)="translation.showDropdown = !translation.showDropdown">
+            <h1>{{translation.sourceText}}</h1>
+            <h3>{{translation.translatedText}}</h3>
+            <div class="three-dots">...</div>
+            <ul class="dropdown" *ngIf="translation.showDropdown" [ngClass]="{'active': translation.showDropdown}">
+                <li (click)="deleteTranslation(translation)">Supprimer</li>
+            </ul>
+        </div>
+    </main>
+</body>
+</html>

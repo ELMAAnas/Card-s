@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Jeu_liaison</title>
+</head>
+<body>
+    <div class="retour">
+        <a routerLink="/Jeux"><div class="div_retour"><img src="/assets/images_code/fleche_retour.svg" alt=""></div></a>
+    </div>
+<!--La progress bar-->
+    <div class="jeu_liaison_navbar">
+        <div class="div_progressbar">
+            <div class="progressbar">
+                <div class="progressbar_color" [style.width.%]="progressBarValue">
+
+                </div>
+            </div>
+        </div>
+    </div>
+<!--Les mots-->
+    <div class="mots_vocab">
+        <ng-container *ngFor="let card of selectedTranslations; trackBy: trackByCard">
+            <div class="mot"
+                 [ngClass]="{
+                   'selected': selectedCards.includes(card),
+                   'correct': isCardCorrect(card),
+                   'incorrect': isCardIncorrect(card),
+                   'dimmed': isCardDimmed(card)
+                 }"
+                 (click)="selectCard(card)">
+              <h1>{{ card.displayText }}</h1>
+            </div>
+        </ng-container>                 
+    </div>  
+</body>
+</html>

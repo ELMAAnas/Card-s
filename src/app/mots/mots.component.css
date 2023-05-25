@@ -1,0 +1,104 @@
+.nav_plus {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+    padding: 11px 20px;
+    gap: 10px;
+    margin-top: 20vh;
+    color: var(--couleur-4);
+}
+
+main {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    grid-gap: 10px;
+    padding: 10px;
+}
+
+main .card {
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-end;
+    align-items: center;
+    padding: 10px;
+    gap: 5px;
+
+    border: 1px solid #5F77B5;
+    border-radius: 10px;
+    color: var(--couleur-texte);
+}
+
+main div h1 {
+    font-size: var(--taille-titre1);
+    font-weight: var(--font-titre1);
+}
+
+main div h3 {
+    font-size: var(--taille-titre3);
+    font-weight: var(--font-titre3);
+}
+
+.card {
+    position: relative;
+    cursor: pointer;
+}
+
+.three-dots {
+    position: absolute;
+    top: 0.8rem;
+    right: -0.5rem;
+    font-size: 25px;
+    border: none;
+    transform: rotate(90deg) translateY(0);
+    opacity: 0;
+}
+  
+
+.card:hover .three-dots {
+    opacity: 70%;
+    animation-name: slide-in;
+    animation-duration: 0.1s;
+    animation-fill-mode: forwards;
+}
+
+.delete-btn {
+    position: absolute;
+    top: 1.5rem;
+    right: 0.5rem;
+    background: rgba(255, 0, 0, 0.7);
+    color: white;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+}
+
+.dropdown {
+    position: absolute;
+    top: 1.5rem;
+    right: 0.5rem;
+    display: flex;
+    flex-direction: column;
+    list-style-type: none;
+    background-color: white;
+    padding: 0.5rem 2rem;
+    border: 1px solid #5F77B5;
+    border-radius: 5px;
+    z-index: 1;
+  }
+  
+.dropdown li {
+    color: rgb(243, 33, 33);
+    cursor: pointer;
+}
+
+@keyframes slide-in {
+    0% {
+      transform: rotate(90deg) translateY(0);
+    }
+    100% {
+      transform: rotate(90deg) translateY(0.5rem);
+    }
+}
+  
+  

@@ -1,0 +1,30 @@
+.elements_nav {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: flex-start;
+    padding: 15px 33px;
+    gap: 10px;
+    border-bottom: 1px solid #d3dffD;
+}
+
+.div_elem_jeu {
+    display: flex;
+    flex-direction: row;
+    align-items: flex-start;
+    padding: 0px;
+    gap: 70px;
+}
+
+.div_elem_jeu img {
+    vertical-align: middle;
+    height: 30px;
+}
+
+.div_elem_jeu span {
+    vertical-align: middle;
+    margin-left: 10px;
+    font-weight: var(--font-titre3);
+    color: var(--couleur-texte);
+    font-size: var(--taille-titre3);
+}

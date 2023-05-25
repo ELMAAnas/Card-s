@@ -1,1 +1,41 @@
-/* You can add global styles to this file, and also import other style files */
+@import url('https://fonts.googleapis.com/css2?family=Lato:wght@100;300;400;700;900&display=swap');
+* {
+    margin: 0px;
+    padding: 0px;
+    box-sizing: border-box;
+    font-family: 'Lato', sans-serif;
+}
+
+main {
+    width: 85vw;
+    margin-left: 15vw;
+}
+
+li {
+    list-style-type: none;
+}
+
+a {
+    text-decoration: none;
+}
+
+:root {
+    --taille-titre1: 24px;
+    --taille-titre2: 21px;
+    --taille-titre3: 21px;
+    --taille-textefonce: 16px;
+    --taille-texteclair: 16px;
+
+    --font-titre1: 600;
+    --font-titre2: 500;
+    --font-titre3: 400;
+    --font-textefonce: 400;
+    --font-texteclair: 400;
+
+    --couleur-1: #BF27FF;
+    --couleur-2: #FFD664;
+    --couleur-3: #EF9300;
+    --couleur-4: #CE912E;
+    --couleur-texte: #5F77B5;
+    --couleur-ligne: #99b0e9;
+}

@@ -1,0 +1,96 @@
+.boutique {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    grid-gap: 150px 50px;
+    padding: 15px;
+}
+
+.boutique * {
+    cursor: pointer;
+}
+
+.boutique .gemmes {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: space-between;
+    padding: 35px 75px 5px;
+    gap: 30px;
+
+    border: 3px solid #56B9FF;
+    border-radius: 30px;
+}
+
+.boutique .cards {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: space-between;
+    padding: 35px 75px 5px;
+    gap: 30px;
+
+    border: 3px solid #BF27FF;
+    border-radius: 30px;
+}
+
+.boutique .modify {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: space-between;
+    padding: 35px 75px 5px;
+    gap: 30px;
+
+    border: 3px solid #EF9300;
+    border-radius: 30px;
+}
+
+.boutique h3 {
+    font-size: var(--taille-titre2);
+    color: var(--couleur-texte);
+    font-weight: var(--font-titre2);
+}
+
+.boutique h1 {
+    font-size: var(--taille-titre1);
+    color: #393939;
+    font-weight: var(--font-titre1);
+}
+
+.abo {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 35px 15px 5px;
+    gap: 250px;
+
+    border-radius: 20px;
+}
+
+.abo .titre_abo {
+    font-size: var(--taille-titre1);
+    color: var(--couleur-texte);
+    font-weight: var(--font-titre1);
+}
+
+.abo .prix_abo {
+    font-size: var(--taille-titre1);
+    color: #393939;
+    font-weight: var(--font-titre1);
+}
+
+.abo .abo_elem {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 0px;
+    gap: 50px;
+}
+
+.abo .prod_abo {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+    gap: 90px;
+}

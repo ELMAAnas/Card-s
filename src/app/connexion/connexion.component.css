@@ -1,0 +1,96 @@
+body {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-top: 20vh;
+}
+
+.ensemble {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 50px;
+}
+
+.ensemble h1 {
+    color: var(--couleur-3);
+}
+
+.connexion {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 10px;
+    gap: 60px;
+    width: 30vw;
+
+    background: var(--couleur-3);
+    color: white;
+    border-radius: 30px;
+}
+
+.connexion_form {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    padding: 20px;
+    gap: 30px;
+    width: 100%;
+}
+
+.connexion_form_pseudo {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 10px;
+    width: 100%;
+}
+
+.connexion_form_pseudo input {
+    padding: 0 10px;
+    font-size: 16px;
+    outline: none;
+    border: solid 1px var(--couleur-3);
+    
+    width: 100%;
+    padding: 5px;
+    border-radius: 10px;
+}
+
+.connexion_form_pseudo input:focus {
+    border: solid 1px #5f5f5f;
+}
+
+
+.connexion_boutton {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 10px;
+}
+
+.connexion_boutton button {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: flex-start;
+    padding: 8px 30px;
+    gap: 10px;
+
+    background: #FFFFFF;
+    border-radius: 10px;
+    border: none;
+    outline: none;
+    cursor: pointer;
+    color: #2A4281;
+}
+
+.connexion_boutton button:active {
+    color: #718bcf;
+}
+
+
+.connexion_boutton p {
+    color: white;
+    cursor: pointer;
+}

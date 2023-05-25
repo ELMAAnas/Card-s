@@ -1,0 +1,52 @@
+.page_traduction {
+    width: 80vw;
+    margin-left: 20vw;
+}
+
+.icones_traduction {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: flex-start;
+    padding: 10px 20px 3px;
+    gap: 30px;
+}
+
+.traduction {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: flex-start;
+    padding: 10px;
+    gap: 10px;
+}
+
+.traduction textarea {
+    width: 100%;
+    padding: 10px;
+    border: 1px solid var(--couleur-ligne);
+    border-radius: 10px;
+}
+
+.traduction textarea:focus {
+    outline: none;
+    border: 2px solid var(--couleur-texte);
+}
+
+.boutton_traduire {
+    display: flex;
+    flex-direction: row;
+    justify-content: flex-end;
+    align-items: center;
+    padding: 11px 20px;
+    gap: 10px;
+}
+
+.boutton_traduire button {
+    padding: 10px 20px;
+    color: #fff;
+    border: none;
+    background: var(--couleur-texte);
+    border-radius: 10px;
+    cursor: pointer;
+}

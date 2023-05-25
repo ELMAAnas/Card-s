@@ -1,0 +1,16 @@
+.nav_plus {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+    padding: 11px 20px;
+    gap: 10px;
+    margin-top: 20vh;
+    color: var(--couleur-4);
+}
+
+router-outlet {
+    width: 80vw;
+    background-color: antiquewhite;
+}
+

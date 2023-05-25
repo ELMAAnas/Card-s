@@ -1,0 +1,102 @@
+.retour {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    padding: 10px 33px;
+    gap: 10px;
+}
+
+.div_progressbar {
+    margin-top: 7vh;
+    margin-left: 7vw;
+    margin-right: 7vw;
+}
+
+.progressbar {
+    background-color: #D9D9D9;
+    border-radius: 30px;
+    height: 15px;
+}
+
+.progressbar_color {
+    background-color: #23d484;
+    border-radius: 30px;
+    height: 15px;
+    width: 0%; /* On démarre avec la progress bar vide */
+    transition: width 0.5s; /* Ajout d'une transition pour une animation fluide */
+}
+
+/*Le Quizz*/
+
+.jeu_quizz {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+    margin-top: 60px;
+}
+
+.jeu_quizz_div {    
+    width: 20vw;
+}
+
+.answers-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    grid-gap: 10px;
+}
+
+.mot {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+    padding: 10px;
+    gap: 10px;
+    border: 1px solid #5F77B5;
+    border-radius: 10px;
+    width: 100%;
+    height: 100px;
+    cursor: pointer;
+}
+
+.mot h1 {
+    font-size: var(--taille-titre1);
+    color: #343a4b;
+    font-weight: var(--font-titre1);
+}
+
+.answers {
+    margin-top: 30px;
+}
+
+.answer-option {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+    padding: 10px;
+    gap: 10px;
+    border: 1px solid #5F77B5;
+    border-radius: 10px;
+    width: 100%;
+    cursor: pointer;
+}
+
+.answers h3 {
+    font-size: var(--taille-titre3);
+    color: #5F77B9;
+    font-weight: var(--font-titre3);
+}
+
+/*Partie dynamique*/
+
+.answers.correct h3 {
+    border-color: #28a745;
+}
+  
+.answers.incorrect h3 {
+    border-color: #dc3545;
+}
+
+

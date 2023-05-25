@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <div class="ensemble">
+        <h1>Inscription</h1>
+        <form class="connexion" (ngSubmit)="onSubmit()">
+            <div class="connexion_form">
+                <div class="connexion_form_pseudo">
+                    <label for="">Nom</label>
+                    <input type="text" [(ngModel)]="nom" name="nom" required>
+                </div>
+                <div class="connexion_form_pseudo">
+                    <label for="">Prénom</label>
+                    <input type="text" [(ngModel)]="prenom" name="prenom" required>
+                </div>
+                <div class="connexion_form_pseudo">
+                    <label for="">Pseudo</label>
+                    <input type="text" [(ngModel)]="pseudo" name="pseudo" required>
+                </div>
+                <div class="connexion_form_pseudo">
+                    <label for="">Date de naissance</label>
+                    <input type="date" [(ngModel)]="dateNaissance" name="dateNaissance" required>
+                </div>
+                <div class="connexion_form_pseudo">
+                    <label for="">Mot de passe</label>
+                    <input type="password" [(ngModel)]="motDePasse" name="motDePasse" required>
+                </div>
+                <div class="connexion_form_pseudo">
+                    <label for="">Confirmation du mot de passe</label>
+                    <input type="password">
+                </div>
+            </div>
+            <div class="connexion_boutton">
+                <button type="submit">S'inscrire</button>
+                <p>Vous avez un compte ? Se connecter</p>
+            </div>
+        </form>
+    </div>
+</body>
+</html>

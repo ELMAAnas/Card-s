@@ -1,0 +1,74 @@
+.retour {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    padding: 10px 33px;
+    gap: 10px;
+}
+
+.div_progressbar {
+    margin-top: 7vh;
+    margin-left: 7vw;
+    margin-right: 7vw;
+}
+
+.progressbar {
+    background-color: #D9D9D9;
+    border-radius: 30px;
+    height: 15px;
+}
+
+.progressbar_color {
+    background-color: #23d484;
+    border-radius: 30px;
+    height: 15px;
+    width: 0%; /* On démarre avec la progress bar vide */
+    transition: width 0.5s; /* Ajout d'une transition pour une animation fluide */
+}
+
+.mots_vocab {
+    margin-top: 10vh;
+    margin-left: 7vw;
+    margin-right: 7vw;
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    grid-gap: 30px 30px;
+    padding: 10px 30px;
+}
+
+.mots_vocab .mot {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    padding: 30px 10px;
+    border: 1px solid #5F77B5;
+    border-radius: 10px;
+    cursor: pointer;
+}
+
+.mots_vocab h1 {
+    font-size: var(--taille-titre1);
+    color: #5F77B9;
+    font-weight: var(--font-titre1);
+}
+
+/*Partie dynamique*/
+
+.mots_vocab .selected {
+    border: 2px solid #5F77B9;
+}
+
+.mots_vocab .correct {
+    border: 1px solid #28a745;
+}
+
+.mots_vocab .dimmed {
+    opacity: .5;
+}
+  
+.mots_vocab .incorrect {
+    border: 1px solid #dc3545;
+}
+
+  

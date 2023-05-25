@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Traduction</title>
+</head>
+<body>
+    <main>
+        <div class="icones_traduction">
+            <div>
+                <img src="/assets/images_code/icone_states.svg" alt="">
+            </div>
+            <div>
+                <img src="/assets/images_code/icone_changer_langue.svg" alt="">
+            </div>
+            <div>
+                <img src="/assets/images_code/icone_france.svg" alt="">
+            </div>
+        </div>
+        <div class="traduction">
+            <textarea class="en" [(ngModel)]="sourceText" cols="30" rows="10"></textarea>
+            <textarea class="fr" [(ngModel)]="translatedText" cols="30" rows="10"></textarea>
+        </div>
+        <div class="boutton_traduire">
+            <button (click)="translateText()">Traduire</button>
+        </div>
+    </main>
+</body>
+</html>

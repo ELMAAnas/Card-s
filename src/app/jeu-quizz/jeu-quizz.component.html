@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <div class="retour">
+        <a routerLink="/Jeux"><div class="div_retour"><img src="/assets/images_code/fleche_retour.svg" alt=""></div></a>
+    </div>
+<!--La progress bar-->
+    <div class="jeu_quizz_navbar">
+        <div class="div_progressbar">
+            <div class="progressbar">
+                <div class="progressbar_color">
+
+                </div>
+            </div>
+        </div>
+    </div>
+<!--Le Quizz-->
+    <div class="jeu_quizz">
+        <div class="jeu_quizz_div">
+            <div class="mot">
+                <h1>{{wordToTranslate}}</h1>
+            </div>
+            <div class="answers-grid">
+                <div
+                    *ngFor="let option of answerOptions"
+                    (click)="selectAnswer(option)"
+                    class="answers"
+                    [ngClass]="{
+                        correct: selectedAnswer === option && option === correctAnswer,
+                        incorrect: selectedAnswer === option && option !== correctAnswer
+                    }"
+                >
+                    <h3 class="answer-option">{{ option }}</h3>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+</html>
