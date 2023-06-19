@@ -17,13 +17,13 @@ app.get('/', (req, res) => {
 
 // Inclure le middleware d'authentification dans les routes que vous souhaitez protéger
 require('./routes/users.routes')(app, verifyToken);
+// Ajout de la route des traductions
+require('./routes/translations.routes')(app, verifyToken);
 
 const port = process.env.PORT || 4400;
 app.listen(port, () => {
   console.log(`Serveur démarré sur le port ${port}`);
 });
-
-const db = require('./models');
 
 const connectionString = 'mongodb://127.0.0.1:27017/cards_db';
 

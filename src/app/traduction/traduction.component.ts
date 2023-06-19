@@ -53,26 +53,26 @@ export class TraductionComponent {
     this.translationStorageService.checkDailyLimit(this.userId).subscribe((remainingTranslations) => {
       if (remainingTranslations > 0) {
         this.translateService.translate('en', 'fr', this.sourceText)
-          .subscribe(
-            response => {
-              console.log('Réponse de la traduction:', response);
-              if (response.ok && response.translated_text !== undefined) {
-                this.translatedText = response.translated_text;
-                console.log('Enregistrement de la traduction...');
-                this.translationStorageService.saveTranslation(this.userId, this.sourceText, this.translatedText)
-                  .subscribe(
-                    () => {
-                      console.log('Traduction enregistrée avec succès.');
-                      this.fetchTranslations();
-                    },
-                    error => console.error('Erreur lors de l\'enregistrement de la traduction:', error)
-                  );
-              } else {
-                console.error('Unexpected response format:', response);
-              }
-            },
-            error => console.error('Erreur lors de la traduction:', error)
-          );
+        .subscribe(
+          response => {
+            console.log('Réponse de la traduction:', response);
+            if (Array.isArray(response)) {
+              this.translatedText = response[0];
+              console.log('Enregistrement de la traduction...');
+              this.translationStorageService.saveTranslation(this.userId, this.sourceText, this.translatedText)
+                .subscribe(
+                  () => {
+                    console.log('Traduction enregistrée avec succès.');
+                    this.fetchTranslations();
+                  },
+                  error => console.error('Erreur lors de l\'enregistrement de la traduction:', error)
+                );
+            } else {
+              console.error('Unexpected response format:', response);
+            }
+          },
+          error => console.error('Erreur lors de la traduction:', error)
+        );
       } else {
         console.error('Erreur lors de la traduction: La limite quotidienne de 5 traductions a été atteinte.');
       }

@@ -11,14 +11,7 @@ module.exports = (mongoose) => {
     pseudo: { type: String, required: true, unique: true },
     date_naissance: { type: Date, required: true },
     mot_de_passe: { type: String, required: true },
-    translations: [
-      {
-        sourceText: String,
-        translatedText: String,
-      },
-    ],
-    translationCount: { type: Number, default: 5 },
-    lastTranslationDate: { type: Date, default: null },
+    translations: [{ type: mongoose.Schema.Types.ObjectId, ref: 'Translation' }],
   });
 
   return mongoose.model(modelName, userSchema);

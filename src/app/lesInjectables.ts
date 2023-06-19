@@ -80,27 +80,28 @@ export class AuthService {
     providedIn: 'root'
 })
 export class TranslateService {
-    private apiUrl = 'https://translo.p.rapidapi.com/api/v3/translate';
-    private apiKey = '4a961ef64cmsh95e9ffe136f273cp1ffbddjsn5317accd3e62';
-    private apiHost = 'translo.p.rapidapi.com';
+  private apiUrl = 'https://rapid-translate-multi-traduction.p.rapidapi.com/t';
+  private apiKey = '4a961ef64cmsh95e9ffe136f273cp1ffbddjsn5317accd3e62';
+  private apiHost = 'rapid-translate-multi-traduction.p.rapidapi.com';
 
-    constructor(private http: HttpClient) {}
+  constructor(private http: HttpClient) {}
 
-    // Traduction du texte
-    public translate(from: string, to: string, text: string): Observable<any> {
-        const headers = new HttpHeaders({
-            'content-type': 'application/x-www-form-urlencoded',
-            'X-RapidAPI-Key': this.apiKey,
-            'X-RapidAPI-Host': this.apiHost
-        });
+  // Traduction du texte
+  public translate(from: string, to: string, text: string): Observable<any> {
+      const headers = new HttpHeaders({
+          'content-type': 'application/json',
+          'X-RapidAPI-Key': this.apiKey,
+          'X-RapidAPI-Host': this.apiHost
+      });
 
-        const body = new HttpParams()
-            .set('from', from)
-            .set('to', to)
-            .set('text', text);
+      const body = {
+          from: from,
+          to: to,
+          q: text
+      };
 
-        return this.http.post(this.apiUrl, body.toString(), { headers });
-    }
+      return this.http.post(this.apiUrl, body, { headers });
+  }
 }
 
 const isSameDay = (date1: Date, date2: Date): boolean => {
@@ -113,30 +114,34 @@ const isSameDay = (date1: Date, date2: Date): boolean => {
 
 // TranslationStorageService
 @Injectable({
-    providedIn: 'root',
+  providedIn: 'root',
 })
-export class TranslationStorageService {
+  export class TranslationStorageService {
   private apiUrl = 'http://localhost:4400/api/users';
   public translationAdded$ = new Subject<void>();
 
   constructor(private http: HttpClient) {}
 
+  private getHeaders(): HttpHeaders {
+    const token = localStorage.getItem('token');
+    return new HttpHeaders().set('Authorization', 'Bearer ' + token);
+  }
+
   checkDailyLimit(userId: string): Observable<number> {
-    return this.http.get<User>(`${this.apiUrl}/${userId}`).pipe(
+    return this.http.get<User>(`${this.apiUrl}/${userId}`, { headers: this.getHeaders() }).pipe(
       map((user) => {
         const today = new Date();
         const lastTranslationDate = user.lastTranslationDate ? new Date(user.lastTranslationDate) : null;
-  
+
         if (!lastTranslationDate || !isSameDay(today, lastTranslationDate)) {
           user.translationCount = 5;
         }
-  
+
         return user.translationCount;
       })
     );
   }
-  
-  
+
   saveTranslation(
     userId: string,
     sourceText: string,
@@ -148,8 +153,8 @@ export class TranslationStorageService {
       userId,
       createdAt: new Date(),
     };
-  
-    return this.http.post(`${this.apiUrl}/${userId}/translations`, translation).pipe(
+
+    return this.http.post(`${this.apiUrl}/${userId}/translations`, translation, { headers: this.getHeaders() }).pipe(
       tap(() => {
         // Notify the UI to update the translation count
         this.translationAdded$.next();
@@ -159,15 +164,14 @@ export class TranslationStorageService {
       })
     );
   }
-  
-  
 
   getTranslations(userId: string): Observable<any[]> {
-    return this.http.get<any[]>(`${this.apiUrl}/${userId}/translations`);
+    return this.http.get<any[]>(`${this.apiUrl}/${userId}/translations`, { headers: this.getHeaders() });
   }
 
   deleteTranslation(userId: string, translationId: string): Observable<any> {
-    return this.http.delete(`${this.apiUrl}/${userId}/translations/${translationId}`);
+    return this.http.delete(`${this.apiUrl}/${userId}/translations/${translationId}`, { headers: this.getHeaders() });
   }
 }
+
 
