@@ -24,29 +24,31 @@ export class TraductionComponent {
   }
   
 
-  public fetchUserIdAndTranslations(): void {
-    const token = localStorage.getItem('token');
-    if (token) {
-      const userIdFromToken = this.authService.getUserIdFromToken(token);
-      if (userIdFromToken) {
+  public fetchUserIdAndTranslations(): void {  
+    const token = localStorage.getItem('token');  
+    if (token) {  
+      const userIdFromToken = this.authService.getUserIdFromToken(token);  
+      if (userIdFromToken) {  
         this.userId = userIdFromToken;
-        this.fetchTranslations();
-      } else {
-        console.error('User ID not found in the token');
-      }
-    } else {
-      console.error('Token not found in local storage');
-    }
-  }
-
-  public fetchTranslations(): void {
-    this.translationStorageService.getTranslations(this.userId).subscribe(
-      translations => {
-        this.translations = translations;
-      },
-      error => console.error('Erreur lors de la récupération des traductions:', error)
-    );
-  }
+        console.log('User ID:', this.userId);  // Log the user ID.
+        this.fetchTranslations();  
+      } else {  
+        console.error('User ID not found in the token');  
+      }  
+    } else {  
+      console.error('Token not found in local storage');  
+    }  
+  }  
+  
+  public fetchTranslations(): void {  
+    this.translationStorageService.getTranslations(this.userId).subscribe(  
+      translations => {  
+        this.translations = translations;  
+        console.log('Translations:', this.translations);  // Log the translations.
+      },  
+      error => console.error('Erreur lors de la récupération des traductions:', error)  
+    );  
+  }  
 
   public translateText(): void {
     console.log('Traduction en cours...');

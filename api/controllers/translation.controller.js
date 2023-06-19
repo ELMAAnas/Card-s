@@ -27,18 +27,20 @@ exports.saveTranslation = async (req, res) => {
     }
 
     if (user.translationCount > 0) {
-      const translation = new Translation({sourceText, translatedText });
+      const translation = new Translation({ sourceText, translatedText, user: user._id });
       await translation.save();
-
+    
+      user.translations.push(translation);
       user.translationCount -= 1;
       user.lastTranslationDate = new Date();
-
+    
       await user.save();
-
+    
       res.status(200).json(translation);
     } else {
       res.status(403).json({ message: 'Daily translation limit reached' });
     }
+    
   } catch (error) {
     console.error('Error saving translation', error);
     res.status(500).json({ message: 'Error saving translation', error: error.message });
