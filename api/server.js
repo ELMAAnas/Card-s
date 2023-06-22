@@ -23,9 +23,9 @@ require('./routes/translations.routes')(app, verifyToken);
 const port = process.env.PORT || 4400;
 app.listen(port, () => {
   console.log(`Serveur démarré sur le port ${port}`);
-});
+}).on('error', err => console.log(err));
 
-const connectionString = 'mongodb://127.0.0.1:27017/cards_db';
+const connectionString = process.env.MONGODB_URI;
 
 // Configuration de Mongoose et connexion à MongoDB
 const mongoose = require('mongoose');
