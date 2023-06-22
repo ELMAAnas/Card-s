@@ -9,6 +9,7 @@ require('dotenv').config();
 
 app.use(cors());
 app.use(express.json());
+app.use(express.static('./dist/api'));
 app.use(morgan("combined"));
 
 app.get('/', (req, res) => {
