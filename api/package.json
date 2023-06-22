@@ -5,7 +5,7 @@
   "main": "server.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "start": "node server.js",
+    "start": "ng build --prod && node server.js",
     "dev": "nodemon server.js"
   },
   "author": "anas",
@@ -21,6 +21,7 @@
     "morgan": "^1.10.0"
   },
   "devDependencies": {
+    "@angular/cli": "^12.2.0",
     "nodemon": "^2.0.22"
   }
 }
