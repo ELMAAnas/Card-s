@@ -1,14 +1,19 @@
 const { User } = require("../models");
+const bcrypt = require('bcrypt');
 const jwt = require("jsonwebtoken");
 require('dotenv').config();
 
 // Create and Save a new User
-exports.create = (req, res) => {
+exports.create = async (req, res) => {
   // Validate request
   if (!req.body.nom) {
     res.status(400).send({ message: "Content can not be empty! Insc" });
     return;
   }
+
+  // Hash password
+  const saltRounds = 10;
+  const hashedPassword = await bcrypt.hash(req.body.mot_de_passe, saltRounds);
 
   // Create a User
   const user = new User({
@@ -16,7 +21,7 @@ exports.create = (req, res) => {
     prenom: req.body.prenom,
     pseudo: req.body.pseudo,
     date_naissance: req.body.date_naissance,
-    mot_de_passe: req.body.mot_de_passe
+    mot_de_passe: hashedPassword
   });
 
   // Save User in the database
@@ -31,6 +36,7 @@ exports.create = (req, res) => {
       });
     });
 };
+
 
 // Retrieve all Users from the database.
 exports.findAll = (req, res) => {
@@ -145,21 +151,24 @@ exports.findAllPublished = (req, res) => {
 };
 
 exports.getUserId = (req, res) => {
-  // Get the token from the request headers
-  const authHeader = req.headers.authorization;
-  const token = authHeader && authHeader.split(" ")[1];
+  // l'id de l'utilisateur est attaché à l'objet req par le middleware d'authentification
+  const userId = req.userData.id;  // Utilisez req.userData.id ici, pas req.userId
 
-  if (!token) {
-    return res.status(401).send({ message: "No token provided" });
-  }
-
-  jwt.verify(token, process.env.JWT_SECRET, (err, decoded) => {
-    if (err) {
-      return res.status(401).send({ message: "Unauthorized" });
-    }
-    res.send({ userId: decoded.id });
-  });
+  User.findById(userId)
+    .then(data => {
+      if (!data)
+        res.status(404).send({ message: "Not found User with id " + userId });
+      else res.send(data);
+    })
+    .catch(err => {
+      res
+        .status(500)
+        .send({ message: "Error retrieving User with id=" + userId });
+    });
 };
+
+
+
 
 
 

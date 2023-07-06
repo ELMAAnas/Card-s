@@ -27,6 +27,7 @@ export class InscriptionComponent {
       translationCount: 0,
       lastTranslationDate: new Date(),
     };
+    console.log(user)
     this.userService.addUser(user)
       .subscribe(
         (response) => {
@@ -41,5 +42,6 @@ export class InscriptionComponent {
         }
       );
   }
+  
   
 }

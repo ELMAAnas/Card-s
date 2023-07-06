@@ -6,10 +6,19 @@ module.exports = app => {
   var router = require("express").Router();
 
   // Create a new User
-  router.post("/", users.create);
+  router.post("/register", auth.register);
 
   // Authenticate a User
-  router.post("/authenticate", auth.authentificate);
+  router.post("/authentificate", auth.authentificate);
+
+  // Refresh a User's Token
+  router.post("/refreshToken", auth.refreshToken);
+
+  // Create a new User
+  router.post("/", users.create);
+
+  // Get UserId for the current user
+  router.get("/me", authMiddleware, users.getUserId);
 
   // Retrieve all Users
   router.get("/", users.findAll);
@@ -29,8 +38,6 @@ module.exports = app => {
   // Create a new Users
   router.delete("/", users.deleteAll);
 
-  // Get UserId for the current user
-  router.get("/me/getUserId", authMiddleware, users.getUserId);
-
   app.use("/api/users", router);
+
 };

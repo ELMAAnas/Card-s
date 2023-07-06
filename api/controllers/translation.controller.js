@@ -3,11 +3,10 @@ const User = require('../models/user.model')(mongoose);
 const Translation = require('../models/translation.model')(mongoose);
 
 const isSameDay = (date1, date2) => {
-  return (
-    date1.getDate() === date2.getDate() &&
-    date1.getMonth() === date2.getMonth() &&
-    date1.getFullYear() === date2.getFullYear()
-  );
+  const d1 = new Date(date1.getFullYear(), date1.getMonth(), date1.getDate());
+  const d2 = new Date(date2.getFullYear(), date2.getMonth(), date2.getDate());
+
+  return d1.getTime() === d2.getTime();
 };
 
 exports.saveTranslation = async (req, res) => {
@@ -22,7 +21,9 @@ exports.saveTranslation = async (req, res) => {
 
     const today = new Date();
     const lastTranslationDate = user.lastTranslationDate ? new Date(user.lastTranslationDate) : null;
+
     if (!lastTranslationDate || !isSameDay(today, lastTranslationDate)) {
+      console.log('Resetting translation count');
       user.translationCount = 5;
     }
 
@@ -33,6 +34,8 @@ exports.saveTranslation = async (req, res) => {
       user.translations.push(translation);
       user.translationCount -= 1;
       user.lastTranslationDate = new Date();
+
+      console.log('Saving new translation, updating last translation date to', user.lastTranslationDate);
     
       await user.save();
     

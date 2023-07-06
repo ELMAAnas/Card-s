@@ -1,7 +1,7 @@
-import { Component, OnDestroy, OnInit } from '@angular/core';
-import { UserService } from '../lesInjectables';
-import { TranslationStorageService } from '../lesInjectables';
+import { Component, OnInit, OnDestroy } from '@angular/core';
 import { Subscription } from 'rxjs';
+import { UserService } from '../lesInjectables';
+import { AuthService } from '../lesInjectables';
 
 @Component({
   selector: 'app-navbar',
@@ -9,47 +9,37 @@ import { Subscription } from 'rxjs';
   styleUrls: ['./navbar.component.css']
 })
 export class NavbarComponent implements OnInit, OnDestroy {
-  userId: string | null = null;
-  translationsAllowedToday: boolean = true;
-  remainingTranslations: number = 5;
-  private subscriptions: Subscription[] = [];
+  translationCount: number = 0;  
+  private translationCountSub!: Subscription;  
+  userId: string = '';  
 
   constructor(
     private userService: UserService,
-    private translationStorageService: TranslationStorageService
-  ) {}
+    private authService: AuthService
+    ) { }
 
-  ngOnInit(): void {
-    this.userService.getUserId().subscribe((userId) => {
-      this.userId = userId;
-      this.subscriptions.push(
-        this.translationStorageService.translationAdded$.subscribe(() => {
-          this.checkDailyLimit();
-        })
-      );
-      this.checkDailyLimit();
-    });
+  ngOnInit() {
+    const token = localStorage.getItem('token');
+    if (token) {
+      const userId = this.authService.getUserIdFromToken(token);
+      if (userId) {
+        this.userId = userId;
+        this.fetchTranslationCount();
+      } else {
+        console.error('Invalid token or user ID not found in token');
+      }
+    } else {
+      console.error('Token not found in local storage');
+    }
   }
   
-
-  ngOnDestroy(): void {
-    this.subscriptions.forEach((subscription) => subscription.unsubscribe());
+  fetchTranslationCount(): void {
+    this.userService.getUser(this.userId).subscribe((user) => {
+      this.translationCount = user.translationCount;
+    });
   }
 
-  checkDailyLimit(): void {
-    if (this.userId) {
-      this.userService.getUser(this.userId).subscribe((user) => {
-        const today = new Date();
-        const lastTranslationDate = new Date(user.lastTranslationDate);
-        if (
-          today.getDate() !== lastTranslationDate.getDate() ||
-          today.getMonth() !== lastTranslationDate.getMonth() ||
-          today.getFullYear() !== lastTranslationDate.getFullYear()
-        ) {
-          user.translationCount = 0;
-        }
-        this.remainingTranslations = user.translationCount;
-      });
-    }
+  ngOnDestroy() {
+    this.translationCountSub.unsubscribe();
   }
 }

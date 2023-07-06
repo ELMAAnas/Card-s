@@ -9,35 +9,49 @@ interface DecodedToken {
     id: string;
 }
 
-// UserService
 @Injectable({
-    providedIn: 'root'
+  providedIn: 'root'
 })
 export class UserService {
-    private serverUrl = 'http://localhost:4400/api/users';
+  private serverUrl = 'https://localhost:4443/api/users';
+  private translationCountUpdated = new Subject<number>();
 
-    constructor(private http: HttpClient) {}
+  constructor(private http: HttpClient) {}
 
-    // Ajout d'un utilisateur
-    addUser(user: User): Observable<any> {
-        user.translationCount = 0;
-        user.lastTranslationDate = new Date();
-        return this.http.post(`${this.serverUrl}`, user);
-    }
+  // Ajout d'un utilisateur
+  addUser(user: User): Observable<any> {
+    user.translationCount = 0;
+    user.lastTranslationDate = new Date();
+    return this.http.post(`${this.serverUrl}/register`, user).pipe(
+      catchError(err => {
+        console.error(err);
+        return throwError('Erreur lors de l\'ajout de l\'utilisateur');
+      })
+    );
+  }
 
-    // Récupération de l'userId pour l'utilisateur actuel
-    getUserId(): Observable<string> {
-        const token = localStorage.getItem('token');
-        const headers = new HttpHeaders().set('Authorization', 'Bearer ' + token);
-        return this.http.get<{ userId: string }>(`${this.serverUrl}/me/getUserId`, { headers: headers }).pipe(
-            map(res => res.userId)
-        );
-    }
+  // Récupération de l'userId pour l'utilisateur actuel
+  getUserId(): Observable<string> {
+    const token = localStorage.getItem('token');
+    const headers = new HttpHeaders().set('Authorization', 'Bearer ' + token);
+    return this.http.get<{ userId: string }>(`${this.serverUrl}/me`, { headers: headers }).pipe(
+      map(res => res.userId)
+    );
+  }
 
-    getUser(userId: string): Observable<User> {
-      return this.http.get<User>(`${this.serverUrl}/${userId}`);
-    }
-    
+  getUser(userId: string): Observable<User> {
+    return this.http.get<User>(`${this.serverUrl}/${userId}`);
+  }
+
+  getTranslationCountUpdateListener() {
+    return this.translationCountUpdated.asObservable();
+  }
+
+  updateTranslationCount(userId: string) {
+    this.getUser(userId).subscribe((user) => {
+      this.translationCountUpdated.next(user.translationCount);
+    });
+  }
 }
 
 // AuthService
@@ -45,7 +59,7 @@ export class UserService {
     providedIn: 'root',
 })
 export class AuthService {
-    private serverUrl = 'http://localhost:4400/api/users';
+    private serverUrl = 'https://localhost:4443/api/users';
 
     constructor(private http: HttpClient) {}
 
@@ -55,7 +69,7 @@ export class AuthService {
         const headers = new HttpHeaders({
             'Content-Type': 'application/json',
         });
-        return this.http.post(`${this.serverUrl}/authenticate`, credentials, { headers }).pipe(
+        return this.http.post(`${this.serverUrl}/authentificate`, credentials, { headers }).pipe(
             tap((response: any) => {
                 if (response && response.token) {
                     localStorage.setItem('token', response.token);
@@ -116,9 +130,10 @@ const isSameDay = (date1: Date, date2: Date): boolean => {
 @Injectable({
   providedIn: 'root',
 })
-  export class TranslationStorageService {
-  private apiUrl = 'http://localhost:4400/api/users';
+export class TranslationStorageService {
+  private apiUrl = 'https://localhost:4443/api/users';
   public translationAdded$ = new Subject<void>();
+  public translationDeleted$ = new Subject<void>();
 
   constructor(private http: HttpClient) {}
 
@@ -129,16 +144,8 @@ const isSameDay = (date1: Date, date2: Date): boolean => {
 
   checkDailyLimit(userId: string): Observable<number> {
     return this.http.get<User>(`${this.apiUrl}/${userId}`, { headers: this.getHeaders() }).pipe(
-      map((user) => {
-        const today = new Date();
-        const lastTranslationDate = user.lastTranslationDate ? new Date(user.lastTranslationDate) : null;
-
-        if (!lastTranslationDate || !isSameDay(today, lastTranslationDate)) {
-          user.translationCount = 5;
-        }
-
-        return user.translationCount;
-      })
+      tap((user) => console.log('checkDailyLimit user:', user)),
+      map((user) => user.translationCount)
     );
   }
 
@@ -156,7 +163,7 @@ const isSameDay = (date1: Date, date2: Date): boolean => {
 
     return this.http.post(`${this.apiUrl}/${userId}/translations`, translation, { headers: this.getHeaders() }).pipe(
       tap(() => {
-        // Notify the UI to update the translation count
+        console.log('Translation added, emitting value...');
         this.translationAdded$.next();
       }),
       catchError((error) => {
@@ -170,8 +177,14 @@ const isSameDay = (date1: Date, date2: Date): boolean => {
   }
 
   deleteTranslation(userId: string, translationId: string): Observable<any> {
-    return this.http.delete(`${this.apiUrl}/${userId}/translations/${translationId}`, { headers: this.getHeaders() });
+    return this.http.delete(`${this.apiUrl}/${userId}/translations/${translationId}`, { headers: this.getHeaders() }).pipe(
+      tap(() => {
+        console.log('Translation deleted, emitting value...');
+        this.translationDeleted$.next();
+      })
+    );
   }
 }
+
 
 
